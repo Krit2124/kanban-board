@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import { InputText } from '@/shared/InputText';
 
 function App() {
   return (
     <div className="App">
-      
+      <InputText/>
     </div>
   );
 }
