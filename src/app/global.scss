@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("../../public/img/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #191d2d;
+}
+
+:root {
+font-size: 14px;
+
+  --color-text-bold: rgba(255, 255, 255, 0.87);
+  --color-text-regular: rgba(255, 255, 255, 0.6);
+  --color-red: rgba(252, 54, 57, 0.6);
+  --color-blue: rgba(1, 132, 207, 1);
+  --color-blue-shadow: rgba(1, 132, 207, 0.5);
+}
+
+button {
+  background: none;
+  border: none;
+}

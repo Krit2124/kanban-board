@@ -1,0 +1,26 @@
+.button {
+  border: none;
+  color: var(--color-text-regular);
+
+  &_circle {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 100%;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.20);
+    }
+  }
+
+  &_blue {
+    &:hover {
+      img, p {
+        // Перекрашивание в синий цвет
+        // Сгенерировано с помощью https://color-to-filter.vercel.app/
+        filter: invert(35%) sepia(86%) saturate(1808%) hue-rotate(179deg) brightness(90%) contrast(99%)
+      }
+    }
+  }
+  
+}

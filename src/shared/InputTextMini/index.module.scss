@@ -1,0 +1,19 @@
+.input {
+  width: 200px;
+  height: 22px;
+  border: 1px solid rgba($color: #ffffff, $alpha: 0.50);
+  background: none;
+  border-radius: 4px;
+  color: var(--color-text-bold);
+  padding: 0px 10px;
+  outline: none;
+
+  &:hover {
+    border: 1px solid var(--color-blue);
+  }
+
+  &:focus {
+    border: 1px solid var(--color-blue);
+    outline: none;
+  }
+}
