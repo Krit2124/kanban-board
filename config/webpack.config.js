@@ -321,10 +321,11 @@ module.exports = function (webpackEnv) {
         }),
         ...(modules.webpackAliases || {}),
         "@/app": path.resolve(__dirname, "../src/app/"),
-        "@/entities": path.resolve(__dirname, "../src/entities/"),
-        "@/features": path.resolve(__dirname, "../src/features/"),
-        "@/shared": path.resolve(__dirname, "../src/shared/"),
+        "@/pages": path.resolve(__dirname, "../src/pages"),
         "@/widgets": path.resolve(__dirname, "../src/widgets/"),
+        "@/features": path.resolve(__dirname, "../src/features/"),
+        "@/entities": path.resolve(__dirname, "../src/entities/"),
+        "@/shared": path.resolve(__dirname, "../src/shared/"),
       },
       plugins: [
         // Prevents users from importing files from outside of src/ (or node_modules/).

@@ -1,7 +1,29 @@
+@font-face {
+  font-family: "Inter";
+  src: url("../../public/fonts/Inter.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../public/fonts/Inter-Italic.ttf") format("truetype");
+  font-style: italic;
+}
+
+:root {
+  font-size: 14px;
+
+  --color-text-bold: rgba(255, 255, 255, 0.87);
+  --color-text-regular: rgba(255, 255, 255, 0.6);
+  --color-red: rgba(252, 54, 57, 0.6);
+  --color-blue: rgba(1, 132, 207, 1);
+  --color-blue-shadow: rgba(1, 132, 207, 0.5);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -11,17 +33,28 @@ body {
   background-color: #191d2d;
 }
 
-:root {
-font-size: 14px;
-
-  --color-text-bold: rgba(255, 255, 255, 0.87);
-  --color-text-regular: rgba(255, 255, 255, 0.6);
-  --color-red: rgba(252, 54, 57, 0.6);
-  --color-blue: rgba(1, 132, 207, 1);
-  --color-blue-shadow: rgba(1, 132, 207, 0.5);
-}
-
-button {
+button,
+input {
   background: none;
   border: none;
+}
+
+h1, h2 {
+  color: var(--color-text-bold);
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+p {
+  color: var(--color-text-regular);
+}
+
+b {
+  color: var(--color-text-bold);
 }
