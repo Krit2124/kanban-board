@@ -35,7 +35,16 @@ const TaskCard = ({ task, isEditable = false }: TaskCardProps) => {
       <div className={s.row}>
         <p>Окончание:</p>
         <p>
-          <b className={new Date(task.endDay) < new Date() ? s.red : ""}>{formatDate(task.endDay)}</b>
+          {/* Обводка красным просроченных задач */}
+          <b
+            className={
+              new Date(task.endDay) < new Date() && task.type !== "done"
+                ? s.red
+                : ""
+            }
+          >
+            {formatDate(task.endDay)}
+          </b>
         </p>
       </div>
 

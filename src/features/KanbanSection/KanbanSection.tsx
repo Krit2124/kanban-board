@@ -1,8 +1,11 @@
 import React from 'react';
 
-import s from './index.module.scss'
 import { ButtonAdd, ButtonTrash } from '@/shared/Buttons';
 import { TaskCard } from '@/entities/TaskCard';
+import { useAppDispatch } from '@/shared/hooks/redux';
+
+import s from './index.module.scss'
+import { deleteTask } from '@/shared/store/tasks.slice';
 
 interface KanbanSectionProps {
   title: string;
@@ -11,6 +14,13 @@ interface KanbanSectionProps {
 }
 
 const KanbanSection = ({title, icon, tasks}: KanbanSectionProps) => {
+  const dispatch = useAppDispatch();
+
+  function deleteAllHandler() {
+    const idsToDelete = tasks.map(task => task.id);
+    dispatch(deleteTask(idsToDelete))
+  }
+
   return (
     <div className={s.container}>
       <div className={s.title}>
@@ -20,7 +30,7 @@ const KanbanSection = ({title, icon, tasks}: KanbanSectionProps) => {
         </div>
 
         {title === 'To Do' && <ButtonAdd onClick={() => {}} />}
-        {title === 'Done' && <ButtonTrash onClick={() => {}} />}
+        {title === 'Done' && <ButtonTrash onClick={() => deleteAllHandler()} />}
       </div>
 
       {tasks.map(task => {
