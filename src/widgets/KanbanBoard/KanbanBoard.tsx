@@ -4,27 +4,25 @@ import { KanbanSection } from '@/features/KanbanSection';
 import { Task } from '@/shared/types/task';
 
 import s from './index.module.scss'
+import { useAppSelector } from '@/shared/hooks/redux';
 
 function SortByDate(a: Task, b: Task) {
   return a.startDay - b.startDay;
 }
 
-interface KanbanBoardProps {
-  tasks: Task[];
-}
-
-const KanbanBoard = ({ tasks }: KanbanBoardProps) => {
+const KanbanBoard = () => {
+  const { filteredTasks } = useAppSelector((state) => state.tasks);
   const [toDoTasks, setToDoTasks] = useState([] as Task[]);
   const [inProgressTasks, setInProgressTasks] = useState([] as Task[]);
   const [reviewTasks, setReviewTasks] = useState([] as Task[]);
   const [doneTasks, setDoneTasks] = useState([] as Task[]);
 
   useEffect(() => {
-    setToDoTasks(tasks.filter(task => task.type === 'todo').sort((a,b) => SortByDate(a,b)));
-    setInProgressTasks(tasks.filter(task => task.type === 'in_progress').sort((a,b) => SortByDate(a,b)));
-    setReviewTasks(tasks.filter(task => task.type === 'review').sort((a,b) => SortByDate(a,b)));
-    setDoneTasks(tasks.filter(task => task.type === 'done').sort((a,b) => SortByDate(a,b)));
-  }, [tasks])
+    setToDoTasks(filteredTasks.filter(task => task.type === 'todo').sort((a,b) => SortByDate(a,b)));
+    setInProgressTasks(filteredTasks.filter(task => task.type === 'in_progress').sort((a,b) => SortByDate(a,b)));
+    setReviewTasks(filteredTasks.filter(task => task.type === 'review').sort((a,b) => SortByDate(a,b)));
+    setDoneTasks(filteredTasks.filter(task => task.type === 'done').sort((a,b) => SortByDate(a,b)));
+  }, [filteredTasks])
 
   return (
     <section className={s.container}>

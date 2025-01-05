@@ -2,13 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Task } from "../types/task";
 import tasksList from "./tasks.json";
+import { formatStringToTimestamp, formatTimestampToString } from "../lib";
 
 interface TasksState {
   tasks: Task[];
+  filteredTasks: Task[];
 }
 
 const initialState: TasksState = {
   tasks: tasksList,
+  filteredTasks: tasksList,
 };
 
 const tasksSlice = createSlice({
@@ -22,7 +25,32 @@ const tasksSlice = createSlice({
         state.tasks = tasksFromLS;
       } else {
         localStorage.setItem("tasks", JSON.stringify(state.tasks));
-      };
+      }
+    },
+    filterTasks(state, action: PayloadAction<string>) {
+      const lowerSearchValue = action.payload.toLowerCase();
+      // Проверка на формат даты dd.mm.yyyy
+      const isDate =
+        /^\d{2}\.\d{2}\.\d{4}$/.test(lowerSearchValue) &&
+        !isNaN(
+          new Date(formatStringToTimestamp(lowerSearchValue)).getTime()
+        );
+
+      const filtered = state.tasks.filter((task) => {
+        if (isDate) {
+          const formattedStartDate = formatTimestampToString(task.startDay);
+          const formattedEndDate = formatTimestampToString(task.endDay);
+          return (
+            formattedStartDate === lowerSearchValue ||
+            formattedEndDate === lowerSearchValue
+          );
+        }
+
+        // Фильтрация по описанию
+        return task.text.toLowerCase().includes(lowerSearchValue);
+      });
+
+      state.filteredTasks = filtered;
     },
     updateTask(state, action: PayloadAction<Task>) {
       const { payload } = action;
@@ -38,9 +66,9 @@ const tasksSlice = createSlice({
         state.tasks = state.tasks.filter((task) => task.id !== payload);
       }
       localStorage.setItem("tasks", JSON.stringify(state.tasks));
-    }
+    },
   },
 });
 
-export const { loadTasksFromLS, updateTask, deleteTask } = tasksSlice.actions;
+export const { loadTasksFromLS, updateTask, deleteTask, filterTasks } = tasksSlice.actions;
 export default tasksSlice.reducer;
