@@ -4,14 +4,16 @@ import { KanbanSection } from '@/features/KanbanSection';
 import { Task } from '@/shared/types/task';
 
 import s from './index.module.scss'
-import { useAppSelector } from '@/shared/hooks/redux';
 
 function SortByDate(a: Task, b: Task) {
   return a.startDay - b.startDay;
 }
 
-const KanbanBoard = () => {
-  const { tasks } = useAppSelector(state => state.tasks);
+interface KanbanBoardProps {
+  tasks: Task[];
+}
+
+const KanbanBoard = ({ tasks }: KanbanBoardProps) => {
   const [toDoTasks, setToDoTasks] = useState([] as Task[]);
   const [inProgressTasks, setInProgressTasks] = useState([] as Task[]);
   const [reviewTasks, setReviewTasks] = useState([] as Task[]);
@@ -26,10 +28,10 @@ const KanbanBoard = () => {
 
   return (
     <section className={s.container}>
-      <KanbanSection title='To Do' tasks={toDoTasks} icon='/img/icons/bxs_happy-alt.svg'/>
-      <KanbanSection title='In Progress' tasks={inProgressTasks} icon='/img/icons/bxs_smile.svg' />
-      <KanbanSection title='Review' tasks={reviewTasks} icon='/img/icons/bxs_upside-down.svg' />
-      <KanbanSection title='Done' tasks={doneTasks} icon='/img/icons/bxs_ghost.svg' />
+      <KanbanSection title='To Do' type="todo" tasks={toDoTasks} icon='/img/icons/bxs_happy-alt.svg'/>
+      <KanbanSection title='In Progress' type='in_progress' tasks={inProgressTasks} icon='/img/icons/bxs_smile.svg' />
+      <KanbanSection title='Review' type="review" tasks={reviewTasks} icon='/img/icons/bxs_upside-down.svg' />
+      <KanbanSection title='Done' type='done' tasks={doneTasks} icon='/img/icons/bxs_ghost.svg' />
     </section>
   );
 };

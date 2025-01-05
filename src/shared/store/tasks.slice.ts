@@ -24,6 +24,12 @@ const tasksSlice = createSlice({
         localStorage.setItem("tasks", JSON.stringify(state.tasks));
       };
     },
+    updateTask(state, action: PayloadAction<Task>) {
+      const { payload } = action;
+      const taskIndex = state.tasks.findIndex((task) => task.id === payload.id);
+      state.tasks[taskIndex] = payload;
+      localStorage.setItem("tasks", JSON.stringify(state.tasks));
+    },
     deleteTask(state, action: PayloadAction<number | number[]>) {
       const { payload } = action;
       if (Array.isArray(payload)) {
@@ -36,5 +42,5 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { loadTasksFromLS, deleteTask } = tasksSlice.actions;
+export const { loadTasksFromLS, updateTask, deleteTask } = tasksSlice.actions;
 export default tasksSlice.reducer;
