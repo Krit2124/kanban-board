@@ -3,7 +3,6 @@
  * @description
  * Функция для замены timestamp даты на формат DD.MM.YYYY
  */
-
 export const formatTimestampToString = (timestamp: number): string => {
   const date = new Date(timestamp);
   const day = String(date.getDate()).padStart(2, "0");
@@ -18,7 +17,6 @@ export const formatTimestampToString = (timestamp: number): string => {
  * @description
  * Функция для замены даты в формате DD.MM.YYYY на timestamp
  */
-
 export const formatStringToTimestamp = (string: string): number => {
   const [day, month, year] = string.split(".").map(Number);
 

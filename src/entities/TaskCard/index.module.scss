@@ -9,7 +9,12 @@
 
 .row {
   display: flex;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 5px;
+
+  @media (max-width: 1220px) {
+    flex-wrap: wrap;
+  }
 }
 
 .edit {

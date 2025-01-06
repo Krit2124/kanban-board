@@ -9,6 +9,7 @@ import { InputTextMini } from "@/shared/InputTextMini";
 import { formatStringToTimestamp, formatTimestampToString } from "@/shared/lib";
 
 import s from "./index.module.scss";
+import { TaskTypes } from "@/shared/enums";
 
 interface TaskCardProps {
   task: Task;
@@ -87,7 +88,7 @@ const TaskCard = ({ task, isEditable = false }: TaskCardProps) => {
           <p>
             <b
               className={
-                new Date(task.endDay) < new Date() && task.type !== "done"
+                new Date(task.endDay) < new Date() && task.type !== TaskTypes.Done
                   ? s.red
                   : ""
               }

@@ -4,8 +4,10 @@ import { useDrop } from "react-dnd";
 import { ButtonAdd, ButtonTrash } from "@/shared/Buttons";
 import { TaskCard } from "@/entities/TaskCard";
 import { useAppDispatch } from "@/shared/hooks/redux";
-import { deleteTask, updateTask } from "@/shared/store/tasks.slice";
+import { addTask, deleteTask, updateTask } from "@/shared/store/tasks.slice";
 import { Task } from "@/shared/types/task";
+import { TaskTypes } from "@/shared/enums";
+import { generateId } from "@/shared/lib";
 
 import s from "./index.module.scss";
 
@@ -19,9 +21,26 @@ interface KanbanSectionProps {
 const KanbanSection = ({ title, type, icon, tasks }: KanbanSectionProps) => {
   const dispatch = useAppDispatch();
 
+  function addTaskHandler() {
+    const newTask: Task = {
+      id: generateId(),
+      text: "Новая задача",
+      type: TaskTypes.ToDo,
+      startDay: Date.now(), // Текущая дата
+      endDay: Date.now() + 7 * 24 * 60 * 60 * 1000, // Через неделю
+    };
+    dispatch(addTask(newTask));
+  }
+
   function deleteAllHandler() {
-    const idsToDelete = tasks.map((task) => task.id);
-    dispatch(deleteTask(idsToDelete));
+    const confirmDelete = window.confirm(
+      "Вы уверены, что хотите удалить все задачи в этой категории?"
+    );
+  
+    if (confirmDelete) {
+      const idsToDelete = tasks.map((task) => task.id);
+      dispatch(deleteTask(idsToDelete));
+    }
   }
 
   function deleteOneHandler(id: number) {
@@ -53,8 +72,8 @@ const KanbanSection = ({ title, type, icon, tasks }: KanbanSectionProps) => {
           <h2>{title}</h2>
         </div>
 
-        {type === "todo" && <ButtonAdd onClick={() => {}} />}
-        {type === "done" && (
+        {type === TaskTypes.ToDo && <ButtonAdd onClick={addTaskHandler} />}
+        {type === TaskTypes.Done && (
           <ButtonTrash
             onClick={deleteAllHandler}
             onDropTask={deleteOneHandler}
@@ -64,7 +83,7 @@ const KanbanSection = ({ title, type, icon, tasks }: KanbanSectionProps) => {
 
       {tasks.map((task) => {
         return (
-          <TaskCard key={task.id} task={task} isEditable={type === "todo"} />
+          <TaskCard key={task.id} task={task} isEditable={type === TaskTypes.ToDo} />
         );
       })}
     </div>

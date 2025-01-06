@@ -9,11 +9,11 @@ import s from "./index.module.scss";
 
 const KanbanPage = () => {
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector((state) => state.tasks.tasks); // Получаем все задачи из хранилища
-  const [searchValue, setSearchValue] = useState(""); // Состояние строки поиска
+  const tasks = useAppSelector((state) => state.tasks.tasks);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    // Загружаем данные из LocalStorage при открытии страницы
+    // Загружаем данные из LocalStorage при открытии страницы   
     dispatch(loadTasksFromLS());
   }, [dispatch]);
 
@@ -32,7 +32,6 @@ const KanbanPage = () => {
         <InputText placeholder="поиск..." onChange={handleSearchChange} />
       </div>
 
-      {/* Передаём отфильтрованные задачи в KanbanBoard */}
       <KanbanBoard />
     </main>
   );

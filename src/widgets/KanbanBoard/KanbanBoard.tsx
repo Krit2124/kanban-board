@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 import { KanbanSection } from '@/features/KanbanSection';
 import { Task } from '@/shared/types/task';
+import { useAppSelector } from '@/shared/hooks/redux';
+import { TaskTypes } from '@/shared/enums';
 
 import s from './index.module.scss'
-import { useAppSelector } from '@/shared/hooks/redux';
 
-function SortByDate(a: Task, b: Task) {
-  return a.startDay - b.startDay;
+function SortTasksByDate(tasks: Task[]) {
+  return tasks.sort((a,b) => a.startDay - b.startDay);
+}
+
+function FilterByType(tasks: Task[], type: TaskTypes) {
+  return tasks.filter(task => task.type === type);
 }
 
 const KanbanBoard = () => {
@@ -18,18 +23,18 @@ const KanbanBoard = () => {
   const [doneTasks, setDoneTasks] = useState([] as Task[]);
 
   useEffect(() => {
-    setToDoTasks(filteredTasks.filter(task => task.type === 'todo').sort((a,b) => SortByDate(a,b)));
-    setInProgressTasks(filteredTasks.filter(task => task.type === 'in_progress').sort((a,b) => SortByDate(a,b)));
-    setReviewTasks(filteredTasks.filter(task => task.type === 'review').sort((a,b) => SortByDate(a,b)));
-    setDoneTasks(filteredTasks.filter(task => task.type === 'done').sort((a,b) => SortByDate(a,b)));
+    setToDoTasks(SortTasksByDate(FilterByType(filteredTasks, TaskTypes.ToDo)));
+    setInProgressTasks(SortTasksByDate(FilterByType(filteredTasks, TaskTypes.InProgress)));
+    setReviewTasks(SortTasksByDate(FilterByType(filteredTasks, TaskTypes.Review)));
+    setDoneTasks(SortTasksByDate(FilterByType(filteredTasks, TaskTypes.Done)));
   }, [filteredTasks])
 
   return (
     <section className={s.container}>
-      <KanbanSection title='To Do' type="todo" tasks={toDoTasks} icon='/img/icons/bxs_happy-alt.svg'/>
-      <KanbanSection title='In Progress' type='in_progress' tasks={inProgressTasks} icon='/img/icons/bxs_smile.svg' />
-      <KanbanSection title='Review' type="review" tasks={reviewTasks} icon='/img/icons/bxs_upside-down.svg' />
-      <KanbanSection title='Done' type='done' tasks={doneTasks} icon='/img/icons/bxs_ghost.svg' />
+      <KanbanSection title='To Do' type={TaskTypes.ToDo} tasks={toDoTasks} icon='/img/icons/bxs_happy-alt.svg'/>
+      <KanbanSection title='In Progress' type={TaskTypes.InProgress} tasks={inProgressTasks} icon='/img/icons/bxs_smile.svg' />
+      <KanbanSection title='Review' type={TaskTypes.Review} tasks={reviewTasks} icon='/img/icons/bxs_upside-down.svg' />
+      <KanbanSection title='Done' type={TaskTypes.Done} tasks={doneTasks} icon='/img/icons/bxs_ghost.svg' />
     </section>
   );
 };
