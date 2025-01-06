@@ -7,7 +7,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@reduxjs/toolkit": "^2.5.0",
     "@svgr/webpack": "^5.5.0",
-    "babel-jest": "^27.4.2",
+    "@testing-library/react": "^16.1.0",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
@@ -27,9 +27,7 @@
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
-    "jest-watch-typeahead": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -46,6 +44,7 @@
     "react-redux": "^9.2.0",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^7.1.1",
+    "react-scripts": "^5.0.1",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -83,9 +82,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/jest": "^27.5.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
-    "sass": "^1.83.0"
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
+    "jest-watch-typeahead": "^1.1.0",
+    "sass": "^1.83.0",
+    "ts-jest": "^27.1.4"
   },
   "jest": {
     "roots": [
@@ -99,7 +105,7 @@
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
+      "<rootDir>/src/app/setupTests.ts"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",

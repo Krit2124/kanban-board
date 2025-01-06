@@ -68,7 +68,7 @@ const KanbanSection = ({ title, type, icon, tasks }: KanbanSectionProps) => {
     >
       <div className={s.title}>
         <div className={s.title_content}>
-          <img src={icon} alt="icon" />
+          <img src={icon} alt="icon" width={24} height={24} />
           <h2>{title}</h2>
         </div>
 
