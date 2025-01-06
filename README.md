@@ -1,46 +1,134 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Тестовое задание на создание Kanban доски
 
-In the project directory, you can run:
+Ссылка на задание: https://disk.yandex.ru/i/jogsHe2Gc8CWqw
 
-### `npm start`
+Были выполнены все функциональные требования, а также реализовано добавление новых задач на доску.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Ссылка на деплой: https://kanban-board-two-sandy.vercel.app/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Путь до файла с тестами: src/shared/lib/formatDate.test.ts
 
-### `npm test`
+## Структура проекта
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Для приложения была использована архитектура FSD (в немного видоизменённом варианте из-за требования максимум 3 уровней вложенности): https://feature-sliced.design/docs/get-started/overview
+```
+- config/                     // Папка с настройками webpack (были изменены пути для соответствия FSD и добавлены алиасы)
+- public/                     // Папка для статических файлов, доступных на сервере (изображений и шрифтов)
+- src/                        // Главная папка с исходным кодом приложения
+  - app/                        // Входная точка приложения, основные настройки и глобальные стили
+  - entities/                   // Сущности (базовые строительные блоки приложения)
+    - TaskCard/                  // Компонент карточки задачи
+  - features/                   // Фичи (комплексные модули с бизнес-логикой)
+    - KanbanSection/             // Раздел (столбик) Kanban-доски
+  - pages/                      // Страницы приложения
+    - KanbanPage/                // Страница Kanban-доски
+  - shared/                     // Общие модули и ресурсы, используемые в приложении (Было бы логично добавить внутрь папку ui с компонентами, но это противоречило бы вышеуказанному требованию)
+    - Buttons/                   // Компоненты кнопок (объединены, чтобы не дублировать стили и props)
+    - enums/                     // Перечисления (для стандартизации типов задач)
+    - hooks/                     // Хуки для типизации Redux
+    - InputText/                 // Обычное поле ввода для поиска по задачам
+    - InputTextMini/             // Мини-версия поля ввода для редактирования задач
+    - lib/                       // Утилиты и вспомогательные функции для форматирования даты (с тестами) и генерации случайного id
+    - store/                     // Redux-хранилище и слайсы для него
+    - types/                     // Общие типы и интерфейсы TypeScript
+  - widgets/                    // Виджеты — крупные независимые модули
+    - KanbanBoard/               // Kanban-доска в отрыве от заголовка и поисковой строки
+- .gitignore                   // Файлы и папки, игнорируемые Git
+- package.json                 // Список зависимостей и скриптов проекта
+- package-lock.json            // Фиксация версий зависимостей для npm
+- tsconfig.json                // Конфигурация TypeScript
+- README.md                    // Документация проекта
+```
 
-### `npm run build`
+## Возможные улучшения
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Ниже перечислены небольшие улучшения, которые можно было бы реализовать при необходимости. Так как об этом не сказано в задании, было решено сейчас не тратить на это время, а доработать при необходимости.
+1) **Добавление отдельного поля для ввода даты**
+Использование специального поля для ввода даты помогло бы избежать ошибок, связанных с неверным форматом даты. С оглядкой на такое улучшение в файле src/shared/lib/formatDate.test.ts не было проведено негативных тестов, так как в них было бы мало смысла в случае доработки.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2) **Создание новых задач в активном состоянии**
+Можно реализовать функционал, при котором новые задачи сразу открываются для редактирования, а в случае отсутствия введённых данных — не сохраняются. Хотя такая реализация была бы удобнее для пользователей, текущая версия добавления задач гораздо проще в реализации, чем озвученная выше.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3) **Организация структуры папки shared**
+Как было отмечено в структуре проекта, в папке shared стоило бы добавить папку для компонентов, чтобы не смешивать их с общими функциями, типами и настройками redux хранилища. Но это противоречило бы требованию на максимум 3 вложенные папки, поэтому пока было решено сохранить существующую структуру.
 
-### `npm run eject`
+## Развёртывание проекта
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Для локального запуска веб-приложение нужно выполнить следующие инструкции:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. Клонирование репозитория Склонируйте репозиторий на свой компьютер, используя Git: 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Склонируйте репозиторий на свой компьютер, используя следующую команду:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+git clone https://github.com/Krit2124/kanban-board
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. Перейдите в директорию проекта 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash 
+cd kanban-board
+```
+
+---
+
+### 3. Убедитесь, что у вас установлены следующие зависимости
+
+- [Node.js](https://nodejs.org/) (рекомендуется версия **18.x** или выше)
+- [npm](https://www.npmjs.com/) для управления пакетами
+
+Проверьте версии Node.js и npm, выполнив:
+```bash
+node -v
+npm -v
+```
+
+---
+
+### 4. Установка зависимостей
+
+Для установки всех необходимых пакетов выполните:
+
+```bash
+npm install
+```
+
+---
+
+### 5. Запуск приложения в режиме разработки
+
+После установки зависимостей запустите проект локально:
+
+```bash
+npm run start
+```
+
+После запуска должна открыться вкладка с приложением по адресу http://localhost:3000/:
+
+---
+
+### 6. Сборка приложения для продакшена
+
+Для сборки оптимизированной версии приложения выполните:
+
+```bash
+npm run build
+```
+
+Это создаст папку `build`, содержащую готовую к развертыванию версию приложения.
+
+---
+
+### 7. Запуск тестов (опционально)
+
+Чтобы запустить тесты, нужно выполнить команду:
+
+```bash
+npm run test
+```
+
+---

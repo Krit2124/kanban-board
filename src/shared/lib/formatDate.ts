@@ -20,5 +20,5 @@ export const formatTimestampToString = (timestamp: number): string => {
 export const formatStringToTimestamp = (string: string): number => {
   const [day, month, year] = string.split(".").map(Number);
 
-  return new Date(year, month - 1, day).getTime();
-}
+  return new Date(year || 1900, month - 1 || 0, day || 1).getTime();
+};
